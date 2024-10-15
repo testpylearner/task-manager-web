@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% from 'bootstrap5/form.html' import render_form %}
+{% block title %}Add Task{% endblock %}
+{% block content %}
+      <!-- To_DO -->
+      <div class="container" style="display: flex; justify-content: center; align-items: center; min-height: 100vh;">
+  <div class="row">
+    <div class="col-sm-12 col-md-8">
+      <h1 class="text-center">EDIT the Task</h1>
+
+      {{ render_form(form, novalidate=True) }}
+
+    </div>
+  </div>
+</div>
+      <!-- end To_DO -->
+{% endblock %}

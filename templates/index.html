@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% block title %}Task Manager{% endblock %}
+{% block content %}
+      <!-- start slider section -->
+      <div id="top_section" class=" banner_main">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-12">
+                  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                     <div class="carousel-inner">
+                        <div class="carousel-item active">
+                           <div class="container-fluid">
+                              <div class="carousel-caption relative">
+                                 <div class="bluid" style="padding: 170px;">
+                                    <h1>Effective  <br>Work Environment </h1>
+                                    <p>Create an effective work environment that fosters productivity, creativity, and collaboration. With comfortable, well-designed task manager  an employees can thrive and reach their full potential. Our task manager encourages open communication, continuous learning, and innovation, all while promoting work-life balance. Invest in a workspace that inspires your team to deliver their best, every day.
+                                    </p>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- end slider section -->
+      <!-- we_do -->
+            <div id="to_do" class="we_do">
+                <div class="container">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            <div class="flashed-messages">
+                                {% for category, message in messages %}
+                                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endwith %}
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="titlepage text_align_center">
+                                <h2>What to do</h2>
+                            </div>
+                            <!-- Add Task Button -->
+                            <div class="text_align_center">
+                                <a href="{{ url_for('add_task') }}" class="btn btn-primary">Add New Task</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="we1" class="carousel slide" data-ride="carousel">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Task</th>
+                                            <th>Created in</th>
+                                            <th>Completion Status</th>
+                                            <th>Due Date</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for to_do in all_tasks %}
+                                        <tr>
+                                            <td class="task-text">{{ tasks[to_do].task }}</td>
+                                            <td>{{ tasks[to_do].time_created }}</td>
+                                            <td>
+                                                <input type="checkbox" id="task{{ loop.index }}" name="task{{ loop.index }}" onchange="toggleTaskStatus(this)">
+                                                <label for="task{{ loop.index }}"> Completed</label>
+                                            </td>
+                                            <td>{{ tasks[to_do].due_date }}</td>
+                                            <td>
+                                                <form action="{{ url_for('delete_task', task_id=tasks[to_do].id) }}" method="POST" style="display:inline;">
+                                                    <input type="hidden" name="_method" value="DELETE">
+                                                    <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+                                                </form>
+                                                <!-- Edit Button -->
+                                                <a href="{{ url_for('edit_task', task_id=tasks[to_do].id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    <!-- end we_do -->
+      <!-- about -->
+      <div id="about" class="about">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="titlepage text_align_center">
+                     <h2>About Task Manager</h2>
+                     <p> Welcome to TaskMaster, your ultimate solution for efficient task management! Designed to help individuals and teams stay organized and prioritize their workload, TaskMaster allows you to easily create, edit, and delete tasks while organizing them by categories, due dates, or priority levels. With features like collaboration tools, deadline reminders, and completion tracking, our user-friendly interface enhances productivity and keeps you on track. We prioritize user feedback and data security, ensuring your information is safe while providing continuous support. Join us in transforming the way you work and achieving your goals with TaskMaster!
+                     </p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- end about -->
+  <!-- contact -->
+<!-- contact -->
+<div id="contact" class="contact">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="titlepage text_align_left">
+                    <h2>Get In Touch</h2>
+                </div>
+                <form id="request" class="main_form" action="{{ url_for('contact') }}" method="POST">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input class="contactus" placeholder="Name" id="name" type="text" name="name" required>
+                        </div>
+                        <div class="col-md-12">
+                            <input class="contactus" placeholder="Phone Number" id="phone" type="tel" name="phone" required>
+                        </div>
+                        <div class="col-md-12">
+                            <input class="contactus" placeholder="Email" id="email" type="email" name="email" required>
+                        </div>
+                        <div class="col-md-12">
+                            <textarea class="textarea" placeholder="Message" id="message" name="message" required></textarea>
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit" class="send_btn">Send Now</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+      <!-- contact -->
+      {% endblock %}
